@@ -11,6 +11,7 @@ public class View
 {
 	public View() throws SQLException
 	{
+		String query = "";
 		// Create swing UI components
 		JLabel JL_id = new JLabel("Id");
 		JLabel JL_name = new JLabel("Name");
@@ -35,6 +36,14 @@ public class View
 		table.setModel(model);
 		
 		// Create controller
+		ControllerInsert controllerInsert = new ControllerInsert(JT_id, JT_name, JT_toa, JT_age, JT_height, model);
+		btn_insert.addActionListener(controllerInsert);
+		
+		ControllerUpdate controllerUpdate = new ControllerUpdate(JT_id, JT_name, JT_toa, JT_age, JT_height, model);
+		btn_update.addActionListener(controllerUpdate);
+		
+		ControllerDelete controllerDelete = new ControllerDelete(JT_id, JT_name, JT_toa, JT_age, JT_height, model);
+		btn_delete.addActionListener(controllerDelete);
 		
 		
 		// Set the view layout
