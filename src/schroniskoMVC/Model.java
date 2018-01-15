@@ -1,14 +1,16 @@
 package schroniskoMVC;
 
+import java.sql.SQLException;
+
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class Model extends DefaultTableModel
 {
 
-	public Model() 
+	public Model() throws SQLException 
 	{
-		super(JDBC.DATA, JDBC.TABLE_HEADER);
+		super(JDBC.getPetsList(), JDBC.TABLE_HEADER);
 	}
 
 }

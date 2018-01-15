@@ -4,12 +4,13 @@ import java.sql.*;
 
 public class JDBC 
 {
-	public static final Object[] TABLE_HEADER = {"id","name","type_of_animal","age","height[cm]"};
+	public static final String[] TABLE_HEADER = {"id","name","type_of_animal","age","height[cm]"};
 	public static Object[][] DATA;
-	private static int i =0;
 	
-	public void LoadDB() throws SQLException
+	public static Object[][] getPetsList() throws SQLException
 	{
+		int i=0;
+		
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -27,16 +28,22 @@ public class JDBC
 			myStmt = myConn.createStatement();
 			
 			// Execute SQL query
-			myRs = myStmt.executeQuery("select * from employees");
+			myRs = myStmt.executeQuery("select * from pets");
+			
+			// Counting Rows
+			myRs.last();
+			DATA = new Object[myRs.getRow()][5];
+			
+			myRs.beforeFirst();
 			
 			// Process the result set
 			while (myRs.next())
 			{
-				DATA[i][0] = myRs.getString("id");
-				DATA[i][1] = myRs.getString("name");
-				DATA[i][2] = myRs.getString("type_of_animal");
-				DATA[i][3] = myRs.getString("age");
-				DATA[i][4] = myRs.getString("height[cm]");
+				DATA[i][0]=myRs.getInt("id");
+				DATA[i][1]=myRs.getString("name");
+				DATA[i][2]=myRs.getString("type_of_animal");
+				DATA[i][3]=myRs.getInt("age");
+				DATA[i][4]=myRs.getInt("height[cm]");
 				i++;
 			}
 			
@@ -47,20 +54,12 @@ public class JDBC
 		}
 		finally 
 		{
-			if (myRs != null) 
-			{
-				myRs.close();
-			}
-			
-			if (myStmt != null) 
-			{
-				myStmt.close();
-			}
-			
-			if (myConn != null) 
-			{
-				myConn.close();
-			}
+			if (myRs != null) myRs.close();
+			if (myStmt != null) myStmt.close();
+			if (myConn != null) myConn.close();
 		}
+		
+		return DATA;
 	}
+	
 }

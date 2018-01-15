@@ -2,13 +2,14 @@ package schroniskoMVC;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
 public class View 
 {
-	public View()
+	public View() throws SQLException
 	{
 		// Create swing UI components
 		JLabel JL_id = new JLabel("Id");

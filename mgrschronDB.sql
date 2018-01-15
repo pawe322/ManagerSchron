@@ -14,3 +14,4 @@ CREATE TABLE `pets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 INSERT INTO `pets` (`id`,`name`,`type_of_animal`,`age`,`height[cm]`) VALUES (1,'Domestos','Kot',4,40);
+INSERT INTO `pets` (`id`,`name`,`type_of_animal`,`age`,`height[cm]`) VALUES (2,'Edmund','Slon',7,140);
