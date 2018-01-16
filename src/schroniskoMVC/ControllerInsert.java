@@ -1,15 +1,8 @@
 package schroniskoMVC;
 
 import java.awt.event.*;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import java.sql.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class ControllerInsert implements ActionListener 
 {
@@ -18,10 +11,9 @@ public class ControllerInsert implements ActionListener
 	private JTextField JT_toa = new JTextField(20);
 	private JTextField JT_age = new JTextField(20);
 	private JTextField JT_height = new JTextField(20);
-	private DefaultTableModel model;
 	private String query;
 	
-	public ControllerInsert (JTextField JT_id, JTextField JT_name, JTextField JT_toa, JTextField JT_age, JTextField JT_height, DefaultTableModel model)
+	public ControllerInsert (JTextField JT_id, JTextField JT_name, JTextField JT_toa, JTextField JT_age, JTextField JT_height)
 	{
 		super();
 		this.JT_id = JT_id;
@@ -29,7 +21,6 @@ public class ControllerInsert implements ActionListener
 		this.JT_toa = JT_toa;
 		this.JT_age = JT_age;
 		this.JT_height = JT_height;
-		this.model = model;
 	}
 	
 	@Override
@@ -37,14 +28,15 @@ public class ControllerInsert implements ActionListener
 	{	
 		Connection myConn = null;
 		Statement myStmt = null;
-		ResultSet myRs = null;
 		
 		String dbUrl = "jdbc:mysql://localhost:3306/mgrschron?useSSL=false";
 		String user = "student";
 		String pass = "student";
 		
-		query = "insert into `pets`(`id`,`name`,`type_of_animal`,`age`,`height[cm]`) Values (`"
-				+JT_id.getText()+"`,`"+JT_name.getText()+"`,`"+JT_toa.getText()+"`,`"+JT_age.getText()+"`,`"+JT_height.getText()+"`)";
+		query = "insert into `pets`" +
+				"(`id`,`name`,`type_of_animal`,`age`,`height[cm]`)" +
+				"Values" +
+				"("+JT_id.getText()+",'"+JT_name.getText()+"','"+JT_toa.getText()+"',"+JT_age.getText()+","+JT_height.getText()+")";
 		try
 		{
 			// Get a connection to database
@@ -53,12 +45,10 @@ public class ControllerInsert implements ActionListener
 			// Create a statement
 			myStmt = myConn.createStatement();
 						
-			// Execute SQL query
-			myRs = myStmt.executeQuery(query);
-			
+			// Execute SQL query		
 			if((myStmt.executeUpdate(query))==1)
 			{
-
+				View.CreateTable(View.table);
 			}
 			
 		}
@@ -66,7 +56,25 @@ public class ControllerInsert implements ActionListener
 		{
 			exc.printStackTrace();
 		}
-		
+		finally 
+		{
+			if (myStmt != null)
+				try 
+				{
+					myStmt.close();
+				} catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
+			if (myConn != null)
+				try 
+				{
+					myConn.close();
+				} catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
+		}
 	}
 	
 }

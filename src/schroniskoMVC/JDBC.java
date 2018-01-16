@@ -9,7 +9,7 @@ public class JDBC
 	
 	public static Object[][] getPetsList() throws SQLException
 	{
-		int i=0;
+		//int i=0;
 		
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -32,20 +32,13 @@ public class JDBC
 			
 			// Counting Rows
 			myRs.last();
+			
+			// Setting size of Object
 			DATA = new Object[myRs.getRow()][5];
 			
-			myRs.beforeFirst();
-			
 			// Process the result set
-			while (myRs.next())
-			{
-				DATA[i][0]=myRs.getInt("id");
-				DATA[i][1]=myRs.getString("name");
-				DATA[i][2]=myRs.getString("type_of_animal");
-				DATA[i][3]=myRs.getInt("age");
-				DATA[i][4]=myRs.getInt("height[cm]");
-				i++;
-			}
+			myRs.beforeFirst();
+			DATA = LoadDB.Load(myRs,DATA);
 			
 		}
 		catch (Exception exc)

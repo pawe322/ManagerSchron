@@ -1,7 +1,6 @@
 package schroniskoMVC;
 
 import java.sql.SQLException;
-
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")

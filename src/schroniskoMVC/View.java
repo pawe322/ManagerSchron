@@ -1,17 +1,16 @@
 package schroniskoMVC;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.sql.SQLException;
-
 import javax.swing.*;
 import javax.swing.border.*;
 
 public class View 
 {
+	public static JTable table;
+	
 	public View() throws SQLException
 	{
-		String query = "";
 		// Create swing UI components
 		JLabel JL_id = new JLabel("Id");
 		JLabel JL_name = new JLabel("Name");
@@ -29,20 +28,19 @@ public class View
 		JButton btn_update = new JButton("Zmieñ");
 		JButton btn_delete = new JButton("Usuñ");
 		
-		JTable table = new JTable();
+		table = new JTable();
 		
 		// Create table model
-		Model model = new Model();
-		table.setModel(model);
+		CreateTable(table);
 		
 		// Create controller
-		ControllerInsert controllerInsert = new ControllerInsert(JT_id, JT_name, JT_toa, JT_age, JT_height, model);
+		ControllerInsert controllerInsert = new ControllerInsert(JT_id, JT_name, JT_toa, JT_age, JT_height);
 		btn_insert.addActionListener(controllerInsert);
 		
-		ControllerUpdate controllerUpdate = new ControllerUpdate(JT_id, JT_name, JT_toa, JT_age, JT_height, model);
+		ControllerUpdate controllerUpdate = new ControllerUpdate(JT_id, JT_name, JT_toa, JT_age, JT_height);
 		btn_update.addActionListener(controllerUpdate);
 		
-		ControllerDelete controllerDelete = new ControllerDelete(JT_id, JT_name, JT_toa, JT_age, JT_height, model);
+		ControllerDelete controllerDelete = new ControllerDelete(JT_id);
 		btn_delete.addActionListener(controllerDelete);
 		
 		
@@ -81,5 +79,11 @@ public class View
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
+	}
+	
+	public static void CreateTable(JTable table) throws SQLException
+	{
+		Model model = new Model();
+		table.setModel(model);
 	}
 }
